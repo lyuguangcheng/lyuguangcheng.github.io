@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675" role="img" aria-label="文章封面占位图 丁">
+  <defs>
+    <linearGradient id="a" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#14b8a6"/>
+      <stop offset="55%" stop-color="#0ea5e9"/>
+      <stop offset="100%" stop-color="#6366f1"/>
+    </linearGradient>
+    <pattern id="p" width="34" height="34" patternUnits="userSpaceOnUse">
+      <path d="M34 0H0v34" fill="none" stroke="#ffffff" stroke-opacity=".12" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="675" fill="url(#a)"/>
+  <rect width="1200" height="675" fill="url(#p)"/>
+  <circle cx="1030" cy="120" r="190" fill="#ffffff" fill-opacity=".1"/>
+  <circle cx="140" cy="600" r="150" fill="#ffffff" fill-opacity=".08"/>
+  <text x="600" y="400" text-anchor="middle" font-family="'Space Grotesk','Segoe UI',sans-serif"
+        font-size="260" font-weight="600" fill="#ffffff" fill-opacity=".9">丁</text>
+</svg>

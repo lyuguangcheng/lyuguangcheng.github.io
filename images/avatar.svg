@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="640" height="640" role="img" aria-label="头像占位图">
+  <defs>
+    <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#6366f1"/>
+      <stop offset="52%" stop-color="#0ea5e9"/>
+      <stop offset="100%" stop-color="#ec4899"/>
+    </linearGradient>
+    <radialGradient id="g2" cx="30%" cy="25%" r="75%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity=".34"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="640" height="640" fill="url(#g1)"/>
+  <rect width="640" height="640" fill="url(#g2)"/>
+  <circle cx="320" cy="264" r="104" fill="#ffffff" fill-opacity=".22"/>
+  <path d="M140 640c0-104 80-176 180-176s180 72 180 176z" fill="#ffffff" fill-opacity=".22"/>
+  <text x="320" y="352" text-anchor="middle" font-family="'Space Grotesk','Segoe UI',sans-serif"
+        font-size="190" font-weight="600" fill="#ffffff" fill-opacity=".92">甲</text>
+</svg>

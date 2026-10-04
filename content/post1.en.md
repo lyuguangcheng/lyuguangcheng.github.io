@@ -1,44 +1,39 @@
 ---
-title: Sample post one
+title: Why I hand-wrote a personal site
 date: 2025-12-05
-tags: [Intro, A]
-summary: D
+tags: [Intro, Frontend]
+summary: There are plenty of ready-made blog frameworks, but I wanted to write this one myself — on the technical choices, and the freedom of having no build step.
 ---
 
-# A
+# Why I hand-wrote a personal site
 
-A
+There is no shortage of blog frameworks and themes. So why write one myself?
 
-## A
+Because with someone else's framework, most of my time went into **arguing with its conventions**: how to override the theme, how to configure plugins, how to tune the build. And the only thing I actually wanted was to write something down and have people read it.
 
-A
+## What I wanted to fix
 
-A
+- **A short path from idea to page** — open the editor, write Markdown, save, refresh, done. No build, no deploy script
+- **A structure anyone can read** — one HTML file, one CSS file, one JS file
+- **Works on any machine** — no Node install, no dependency download
 
-> A
+## The choices
 
-## B
+| Need | Choice | Why |
+| --- | --- | --- |
+| Content format | Markdown | Plain text, still readable in ten years |
+| Rendering | marked | One CDN file and it works |
+| Routing | hash | Zero config on static hosting, safe under a sub-path |
+| Styling | native CSS variables | Theme switching is a single attribute change |
 
-A
+> A tool should be transparent: the longer you use it, the less you notice it.
 
-1. A
-2. B
-3. C
+## Three rules for myself
 
-A
+1. **No build step** — refreshing the browser is the whole pipeline
+2. **No backend** — pure static, deployable anywhere
+3. **The code must be readable** — future me should find the edit point in `app.js` within ten minutes
 
-```bash
-# A
-echo "A"
-```
+## What's next
 
-## C
-
-A
-
-A
-
-| A | B |
-| --- | --- |
-| A | B |
-| C | D |
+Fill in the content first, then consider an archive page and RSS. Features are not urgent — **writing consistently is the whole point of this site existing**.

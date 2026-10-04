@@ -12,6 +12,8 @@
 index.html          页面骨架：导航、内容挂载点 #content-area、页脚
 styles.css          全部样式：设计令牌 → 重置 → 背景 → 导航 → 布局 → 组件 → 响应式
 app.js              全部交互：i18n、内容加载、Markdown 渲染、路由、主题、访客计数
+content-bundle.js   自动生成：内嵌的 Markdown 内容，让 file:// 直接打开也能用
+build-content.ps1   生成上面那个 bundle 的脚本
 content/            内容层，一个页面一个 Markdown（.md 中文 / .en.md 英文）
 images/             图片资源（当前均为占位 SVG）
 .nojekyll           让 GitHub Pages 原样发布，不做 Jekyll 处理
@@ -19,13 +21,30 @@ images/             图片资源（当前均为占位 SVG）
 
 ## 本地预览
 
-直接双击 `index.html` 也能看，但因为用了 `fetch()` 读取 `content/*.md`，
-`file://` 协议会被浏览器拦截，**建议用本地服务器**：
+**方式一：直接双击 `index.html`** —— 可以正常浏览，内容来自 `content-bundle.js`。
+
+**方式二：起一个本地服务器**（推荐，内容走实时 `fetch`，改完 Markdown 刷新即可，不必重新打包）：
 
 ```powershell
 python -m http.server 8848
 # 然后打开 http://127.0.0.1:8848
 ```
+
+### 为什么需要 content-bundle.js
+
+浏览器出于安全策略，会拦截 `file://` 页面发出的 `fetch()` 请求。所以直接双击打开时，
+Markdown 读不到，页面会显示「内容加载失败」。
+
+解决办法是把 Markdown 内嵌进一个 JS 文件（JS 是同步加载的，不受该限制）。
+**修改 `content/` 下的 Markdown 后，运行一次：**
+
+```powershell
+powershell -ExecutionPolicy Bypass -File build-content.ps1
+```
+
+> 通过 http(s) 访问（含 GitHub Pages）时用的是实时 `fetch`，忘了运行也不影响线上内容，
+> 只是双击本地文件预览时会看到旧内容。
+
 
 ## 内容模型
 

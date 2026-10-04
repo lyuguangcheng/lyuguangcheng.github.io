@@ -1,30 +1,39 @@
 ---
-title: Sample post two
+title: Notes on The Non-Designer's Design Book
 date: 2026-01-11
-tags: [Reading, B]
-summary: C
+tags: [Reading, Design]
+summary: Proximity, alignment, repetition, contrast — four plain words that finally explain most of the pages I used to call "ugly, but I can't say why".
 ---
 
-# B
+# Notes on *The Non-Designer's Design Book*
 
-B
+The book keeps returning to four things: **proximity, alignment, repetition, contrast**. It sounds like common sense, but after reading it I could suddenly name what was wrong with my old pages.
 
-## A
+## Proximity: keep related things together
 
-B
+I used to lay out a card by spreading title, description and link evenly, assuming more whitespace meant more polish. The problem is that **the eye has nowhere to land**: when everything is equidistant, nothing reads as a group.
 
-> B
+> Whitespace is not the goal. Grouping is.
 
-## B
+Close together means related; pulled apart means unrelated. That one rule cleaned up my interfaces immediately.
 
-B
+## Alignment: find the invisible line
 
-- A
-- B
-- C
+- If text is left-aligned, keep it on **exactly** the same left edge
+- Elements inside a card should be either left-aligned or centred, not half and half
+- Use only **two or three fixed spacing values**; stop nudging by feel
 
-## C
+## Repetition: give the page a family resemblance
 
-B
+Across a site, border radius, tag colours and heading weights should stay consistent. Repetition is not monotony — it **builds a predictable order**, so the second encounter is instantly understood.
 
-B
+## Contrast: be obvious, or don't bother
+
+Slightly-bigger headings look like a mistake, not a decision. When the difference is too small, people assume nobody meant it.
+
+## Applied to this site
+
+- Unified card padding onto one spacing scale
+- Pulled dates and titles apart in weight and colour
+
+The page did not get more complicated, but it **reads smoothly now**. That may be the most practical thing in the book.

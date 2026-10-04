@@ -75,25 +75,41 @@
 
     /* 文章列表：新增文章 = content/ 放 postN.md/.en.md + 这里加一条 */
     var POSTS = [
-        { id: 'post4', date: '2026-05-18', summary: { zh: '甲', en: 'A' } },
-        { id: 'post3', date: '2026-03-02', summary: { zh: '乙', en: 'B' } },
-        { id: 'post2', date: '2026-01-11', summary: { zh: '丙', en: 'C' } },
-        { id: 'post1', date: '2025-12-05', summary: { zh: '丁', en: 'D' } }
+        { id: 'post4', date: '2026-05-18',
+          summary: { zh: '做产品时最难的不是加功能，而是判断哪个功能可以不加。',
+                     en: 'The hard part is not adding features, it is deciding which ones not to add.' } },
+        { id: 'post3', date: '2026-03-02',
+          summary: { zh: '不急着上工具链，先用浏览器自带的面板按顺序排查。',
+                     en: 'Skip the toolchain for now — check the browser panels in order first.' } },
+        { id: 'post2', date: '2026-01-11',
+          summary: { zh: '亲密性、对齐、重复、对比：四个词解释了我过去大部分「说不上哪里丑」的页面。',
+                     en: 'Proximity, alignment, repetition, contrast — four words that explain most of my ugly pages.' } },
+        { id: 'post1', date: '2025-12-05',
+          summary: { zh: '现成的框架很多，但我还是想自己写一遍——关于「没有构建步骤」的自由。',
+                     en: 'Plenty of frameworks exist, yet I wanted to write this one myself — on having no build step.' } }
     ];
 
     /* 项目卡片：与 content/projects.md 的叙述对应 */
     var PROJECTS = [
-        { name: { zh: '甲项目', en: 'Project A' }, desc: { zh: '甲', en: 'A' },
+        { name: { zh: '个人网站', en: 'Personal site' },
+          desc: { zh: '你现在正在看的这个站点：原生 HTML / CSS / JS，没有构建步骤，内容全部放在 Markdown 里。',
+                  en: 'The site you are reading now: vanilla HTML / CSS / JS, no build step, content in Markdown.' },
           cover: 'images/project-1.svg', tags: ['HTML', 'CSS', 'JS'], year: '2026',
           links: [{ label: 'Repo', href: '#' }, { label: 'Demo', href: '#' }] },
-        { name: { zh: '乙项目', en: 'Project B' }, desc: { zh: '乙', en: 'B' },
+        { name: { zh: '数据看板', en: 'Data dashboard' },
+          desc: { zh: '把散落在表格里的指标整理成能一眼看懂的图表，重点是先把口径定义清楚。',
+                  en: 'Turns metrics scattered across spreadsheets into charts you can read at a glance — starting with agreed definitions.' },
           cover: 'images/project-2.svg', tags: ['Python', 'Data'], year: '2025',
           links: [{ label: 'Repo', href: '#' }] },
-        { name: { zh: '丙项目', en: 'Project C' }, desc: { zh: '丙', en: 'C' },
-          cover: 'images/project-3.svg', tags: ['Design', 'Figma'], year: '2025',
-          links: [{ label: 'Case', href: '#' }] },
-        { name: { zh: '丁项目', en: 'Project D' }, desc: { zh: '丁', en: 'D' },
-          cover: 'images/project-4.svg', tags: ['Tooling', 'Node'], year: '2024',
+        { name: { zh: '效率插件', en: 'Productivity extension' },
+          desc: { zh: '把每天重复的几步操作压成一次点击：划词整理、快捷收藏、标签归位。',
+                  en: 'Compresses the few steps I repeat daily into one click: clip, save, tag.' },
+          cover: 'images/project-3.svg', tags: ['TypeScript', 'Chrome API'], year: '2025',
+          links: [{ label: 'Repo', href: '#' }] },
+        { name: { zh: '命令行工具', en: 'CLI tool' },
+          desc: { zh: '一条命令把散落的文件按规则归档，替代每次手动整理文件夹的十分钟。',
+                  en: 'One command files everything away by rule, replacing ten minutes of manual tidying.' },
+          cover: 'images/project-4.svg', tags: ['Node.js', 'CLI'], year: '2024',
           links: [{ label: 'Repo', href: '#' }] }
     ];
 
@@ -140,6 +156,23 @@
         var path = contentPath(file);
         if (cache[path]) return Promise.resolve(cache[path]);
 
+        // 优先读取 content-bundle.js 内嵌的内容：
+        // 这样直接用 file:// 双击打开 index.html 也能正常显示（fetch 会被浏览器拦截）
+        var bundle = window.LGC_CONTENT;
+        if (bundle) {
+            if (bundle[path]) {
+                cache[path] = parseFrontMatter(bundle[path]);
+                return Promise.resolve(cache[path]);
+            }
+            if (lang === 'en') {
+                var bundleZh = CONTENT_DIR + file + '.md';
+                if (bundle[bundleZh]) {
+                    cache[bundleZh] = parseFrontMatter(bundle[bundleZh]);
+                    return Promise.resolve(cache[bundleZh]);
+                }
+            }
+        }
+
         return fetch(path, { cache: 'no-cache' })
             .then(function (res) {
                 if (!res.ok) throw new Error('HTTP ' + res.status + ' · ' + path);
@@ -183,7 +216,13 @@
                 var i = line.indexOf(':');
                 if (i < 1) return;
                 var key = line.slice(0, i).trim();
-                var val = line.slice(i + 1).trim().replace(/^["']|["']$/g, '');
+                var val = line.slice(i + 1).trim();
+                // 只有整个值被一对相同引号包裹时才剥离引号，
+                // 避免把 A note on "good enough" 这类值切坏
+                var q = val.charAt(0);
+                if ((q === '"' || q === "'") && val.length > 1 && val.charAt(val.length - 1) === q) {
+                    val = val.slice(1, -1);
+                }
                 if (/^\[.*\]$/.test(val)) {
                     val = val.slice(1, -1).split(',')
                         .map(function (s) { return s.trim(); })

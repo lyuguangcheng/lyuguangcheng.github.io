@@ -25,14 +25,26 @@
 powershell -ExecutionPolicy Bypass -File build-content.ps1
 ```
 
-脚本会读取 `content/` 下所有 `.md`（按文件名排序）写入 `content-bundle.js`。
+脚本会做两件事：
+
+1. 读取 `content/` 下所有 `.md`（按文件名排序）写入 `content-bundle.js`；
+2. **自动更新 `index.html` 里的缓存版本号** —— `styles.css` / `content-bundle.js` / `app.js`
+   的 `?v=` 会按各自文件的**内容哈希**重新计算。
+
+第 2 点是关键：内容一变版本号就变，浏览器便不会继续用旧缓存；内容没变时版本号不变，
+所以**重复运行不会产生多余 diff**。以后你不用再手动改 `?v=`，也不会再遇到
+「明明改了文件、页面却没更新」的情况。
+
 如果是在看线上站点，重建后还要提交并推送：
 
 ```powershell
-git add content-bundle.js content
+git add -A
 git commit -m "更新内容"
 git push
 ```
+
+> 只改 Markdown 而忘记跑脚本时，**线上页面（读 bundle）不会变，本地双击 `index.html` 却会变**。
+> 两边表现不一致时，先确认是不是漏了这一步。
 
 ## 中英文双语
 

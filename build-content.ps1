@@ -67,3 +67,53 @@ $body = $banner + "`nwindow.LGC_CONTENT = " + $json + ";`n"
 
 $kb = [Math]::Round((Get-Item $outFile).Length / 1KB, 1)
 Write-Output ("Done. Bundled {0} markdown file(s) into content-bundle.js ({1} KB)." -f $files.Count, $kb)
+
+# ---------------------------------------------------------------------------
+# 顺带把 index.html 里的缓存版本号按文件内容算出来：
+#   内容一变 -> 版本号就变 -> 浏览器不会再用旧缓存
+#   内容没变 -> 版本号不动 -> 重复运行不会产生多余 diff
+# ---------------------------------------------------------------------------
+$indexFile = Join-Path $root 'index.html'
+
+function Get-ContentStamp([string]$path) {
+    if (-not (Test-Path -LiteralPath $path)) { return $null }
+    # 取内容 SHA256 的前 8 位十六进制，足够当缓存标识
+    (Get-FileHash -LiteralPath $path -Algorithm SHA256).Hash.Substring(0, 8).ToLower()
+}
+
+function Update-AssetVersion([string]$fileName) {
+    $target = Join-Path $root $fileName
+    if (-not (Test-Path -LiteralPath $target)) { return $null }
+    if (-not (Test-Path -LiteralPath $indexFile)) { return $null }
+
+    $html = [IO.File]::ReadAllText($indexFile, [Text.Encoding]::UTF8)
+    $name = [regex]::Escape($fileName)
+    $pattern = '(' + $name + '\?v=)[A-Za-z0-9._-]+'
+    $m = [regex]::Match($html, $pattern)
+    if (-not $m.Success) { return $null }
+
+    $stamp = Get-ContentStamp $target
+    $current = $m.Groups[0].Value.Substring($m.Groups[1].Value.Length)
+    if ($current -eq $stamp) {
+        return [pscustomobject]@{ File = $fileName; Stamp = $stamp; Changed = $false }
+    }
+
+    # 用 MatchEvaluator 替换，避免文件名中的特殊字符被当成替换模板
+    $evaluator = [System.Text.RegularExpressions.MatchEvaluator] { param($match) $match.Groups[1].Value + $stamp }
+    $html = [regex]::Replace($html, $pattern, $evaluator, 1)
+    [IO.File]::WriteAllText($indexFile, $html, (New-Object Text.UTF8Encoding($false)))
+    return [pscustomobject]@{ File = $fileName; Stamp = $stamp; Changed = $true }
+}
+
+Write-Output ""
+Write-Output "Stamping cache-busting versions in index.html:"
+foreach ($asset in @('styles.css', 'content-bundle.js', 'app.js')) {
+    $result = Update-AssetVersion $asset
+    if ($null -eq $result) {
+        Write-Output ("  {0,-20} skipped (file or ?v= marker not found)" -f $asset)
+    } elseif ($result.Changed) {
+        Write-Output ("  {0,-20} updated -> v={1}" -f $asset, $result.Stamp)
+    } else {
+        Write-Output ("  {0,-20} unchanged (v={1})" -f $asset, $result.Stamp)
+    }
+}

@@ -23,32 +23,32 @@
     /* ------------------------------- 多语言 -------------------------------- */
     var I18N = {
         zh: {
-            navHome: '首页', navProject: '项目', navStory: '随笔', navAbout: '关于',
+            navHome: '首页', navStory: '随笔',
+            resumeEyebrow: 'Resume', resumeStatus: '求职方向：软件测试 / 后端开发',
+            phone: '手机', email: '邮箱',
             footer: '© 2026 吕广成 · 用原生 HTML / CSS / JS 手写。',
             visitors: '访问量', loading: '加载中…',
             notFound: '找不到这个页面', notFoundDesc: '链接可能已经失效，回到首页看看吧。',
             loadError: '内容加载失败',
             loadErrorDesc: '请确认 content/ 目录下存在对应文件，或通过本地服务器预览。',
-            backHome: '返回首页', allPosts: '全部随笔', latestPosts: '最新随笔',
-            featuredProjects: '精选项目', allProjects: '全部项目',
+            backHome: '返回首页', allPosts: '全部随笔',
             prevPost: '上一篇', nextPost: '下一篇',
             copy: '复制', copied: '已复制',
-            noPosts: '还没有文章，去 content/ 目录添加一篇吧。',
-            toc: '目录', minRead: '分钟阅读'
+            minRead: '分钟阅读'
         },
         en: {
-            navHome: 'Home', navProject: 'Project', navStory: 'Story', navAbout: 'About',
+            navHome: 'Home', navStory: 'Story',
+            resumeEyebrow: 'Resume', resumeStatus: 'Open to: software testing / backend roles',
+            phone: 'Phone', email: 'Email',
             footer: '© 2026 Lvguangcheng · Hand-coded with vanilla HTML / CSS / JS.',
             visitors: 'Visitors', loading: 'Loading…',
             notFound: 'Page not found', notFoundDesc: 'This link may be broken. Let’s head back home.',
             loadError: 'Failed to load content',
             loadErrorDesc: 'Check that the file exists under content/, or preview through a local server.',
-            backHome: 'Back home', allPosts: 'All posts', latestPosts: 'Latest posts',
-            featuredProjects: 'Featured projects', allProjects: 'All projects',
+            backHome: 'Back home', allPosts: 'All posts',
             prevPost: 'Previous', nextPost: 'Next',
             copy: 'Copy', copied: 'Copied',
-            noPosts: 'No posts yet — add one to the content/ folder.',
-            toc: 'Contents', minRead: 'min read'
+            minRead: 'min read'
         }
     };
 
@@ -61,57 +61,17 @@
     }
 
     /* --------------------------- 页面与数据注册表 -------------------------- */
-    /* view: home | project | story | about | post；file 为 content 下的文件名 */
+    /* view: home | project | story | post；file 为 content 下的文件名
+       首页（#home）即个人简历，内容来自 content/home.md */
     var PAGES = {
         home:    { view: 'home',    file: 'home',     nav: 'home',    title: { zh: '首页', en: 'Home' } },
         project: { view: 'project', file: 'projects', nav: 'project', title: { zh: '项目', en: 'Project' } },
         story:   { view: 'story',   file: 'story',    nav: 'story',   title: { zh: '随笔', en: 'Story' } },
-        about:   { view: 'about',   file: 'about',    nav: 'about',   title: { zh: '关于', en: 'About' } },
         post1:   { view: 'post', file: 'post1', nav: 'story', title: { zh: '示例文章一', en: 'Sample post one' } },
         post2:   { view: 'post', file: 'post2', nav: 'story', title: { zh: '示例文章二', en: 'Sample post two' } },
         post3:   { view: 'post', file: 'post3', nav: 'story', title: { zh: '示例文章三', en: 'Sample post three' } },
         post4:   { view: 'post', file: 'post4', nav: 'story', title: { zh: '示例文章四', en: 'Sample post four' } }
     };
-
-    /* 文章列表：新增文章 = content/ 放 postN.md/.en.md + 这里加一条 */
-    var POSTS = [
-        { id: 'post4', date: '2026-05-18',
-          summary: { zh: '做产品时最难的不是加功能，而是判断哪个功能可以不加。',
-                     en: 'The hard part is not adding features, it is deciding which ones not to add.' } },
-        { id: 'post3', date: '2026-03-02',
-          summary: { zh: '不急着上工具链，先用浏览器自带的面板按顺序排查。',
-                     en: 'Skip the toolchain for now — check the browser panels in order first.' } },
-        { id: 'post2', date: '2026-01-11',
-          summary: { zh: '亲密性、对齐、重复、对比：四个词解释了我过去大部分「说不上哪里丑」的页面。',
-                     en: 'Proximity, alignment, repetition, contrast — four words that explain most of my ugly pages.' } },
-        { id: 'post1', date: '2025-12-05',
-          summary: { zh: '现成的框架很多，但我还是想自己写一遍——关于「没有构建步骤」的自由。',
-                     en: 'Plenty of frameworks exist, yet I wanted to write this one myself — on having no build step.' } }
-    ];
-
-    /* 项目卡片：与 content/projects.md 的叙述对应 */
-    var PROJECTS = [
-        { name: { zh: '个人网站', en: 'Personal site' },
-          desc: { zh: '你现在正在看的这个站点：原生 HTML / CSS / JS，没有构建步骤，内容全部放在 Markdown 里。',
-                  en: 'The site you are reading now: vanilla HTML / CSS / JS, no build step, content in Markdown.' },
-          cover: 'images/project-1.svg', tags: ['HTML', 'CSS', 'JS'], year: '2026',
-          links: [{ label: 'Repo', href: '#' }, { label: 'Demo', href: '#' }] },
-        { name: { zh: '数据看板', en: 'Data dashboard' },
-          desc: { zh: '把散落在表格里的指标整理成能一眼看懂的图表，重点是先把口径定义清楚。',
-                  en: 'Turns metrics scattered across spreadsheets into charts you can read at a glance — starting with agreed definitions.' },
-          cover: 'images/project-2.svg', tags: ['Python', 'Data'], year: '2025',
-          links: [{ label: 'Repo', href: '#' }] },
-        { name: { zh: '效率插件', en: 'Productivity extension' },
-          desc: { zh: '把每天重复的几步操作压成一次点击：划词整理、快捷收藏、标签归位。',
-                  en: 'Compresses the few steps I repeat daily into one click: clip, save, tag.' },
-          cover: 'images/project-3.svg', tags: ['TypeScript', 'Chrome API'], year: '2025',
-          links: [{ label: 'Repo', href: '#' }] },
-        { name: { zh: '命令行工具', en: 'CLI tool' },
-          desc: { zh: '一条命令把散落的文件按规则归档，替代每次手动整理文件夹的十分钟。',
-                  en: 'One command files everything away by rule, replacing ten minutes of manual tidying.' },
-          cover: 'images/project-4.svg', tags: ['Node.js', 'CLI'], year: '2024',
-          links: [{ label: 'Repo', href: '#' }] }
-    ];
 
     /* ------------------------------- 工具函数 ------------------------------ */
     function $(sel, root) { return (root || document).querySelector(sel); }
@@ -274,117 +234,56 @@
             '</div></div>';
     }
 
-    function sectionHeading(titleKey, moreHref, moreKey) {
-        return '<div class="section-heading"><h2>' + escapeHTML(t(titleKey)) + '</h2>' +
-            (moreHref ? '<a class="more" href="' + moreHref + '">' + escapeHTML(t(moreKey)) + ' →</a>' : '') +
-            '</div>';
-    }
-
-    function statItem(value, label) {
-        return '<div class="stat"><span class="stat-value">' + escapeHTML(value) + '</span>' +
-            '<span class="stat-label">' + escapeHTML(label) + '</span></div>';
-    }
-
-    function projectCard(p) {
-        return '<article class="card project-card reveal">' +
-            '<div class="project-cover"><img src="' + escapeHTML(p.cover) + '" alt="' +
-            escapeHTML(pick(p.name)) + '" loading="lazy" /></div>' +
-            '<div class="project-body">' +
-            '<h3>' + escapeHTML(pick(p.name)) + '</h3>' +
-            '<p>' + escapeHTML(pick(p.desc)) + '</p>' +
-            '<div class="tag-row">' + p.tags.map(function (tag) {
-                return '<span class="tag">' + escapeHTML(tag) + '</span>';
-            }).join('') + '</div>' +
-            '<div class="project-meta"><span>' + escapeHTML(p.year) + '</span></div>' +
-            '<div class="project-links">' + p.links.map(function (l) {
-                return '<a href="' + escapeHTML(l.href) + '">' + escapeHTML(l.label) + ' →</a>';
-            }).join('') + '</div>' +
-            '</div></article>';
-    }
-
-    function postItem(post) {
-        var page = PAGES[post.id] || { title: { zh: post.id, en: post.id } };
-        return '<a class="post-item reveal" href="#' + escapeHTML(post.id) + '">' +
-            '<span class="post-date">' + escapeHTML(formatDate(post.date)) + '</span>' +
-            '<span><span class="post-title">' + escapeHTML(pick(page.title)) + '</span>' +
-            '<p class="post-summary">' + escapeHTML(pick(post.summary)) + '</p></span>' +
-            '<span class="post-arrow" aria-hidden="true">→</span>' +
-            '</a>';
-    }
-
-    /* 首页：Hero（取自 home.md）+ 数据条 + 精选项目 + 最新随笔 */
-    function viewHome(doc) {
-        return '<div class="page">' +
-            '<section class="hero">' +
-            '<div class="hero-text">' +
-            '<span class="eyebrow">Portfolio · 2026</span>' +
-            '<div class="prose hero-copy">' + renderMarkdown(stripH1(doc.body)) + '</div>' +
-            '<div class="hero-actions">' +
-            '<a class="btn btn-primary" href="#project">' + escapeHTML(t('allProjects')) + ' →</a>' +
-            '<a class="btn" href="#about">' + escapeHTML(t('navAbout')) + '</a>' +
-            '</div></div>' +
-            '<div class="hero-portrait"><img src="images/avatar.svg" alt="avatar" /></div>' +
-            '</section>' +
-            '<div class="stat-row">' +
-            statItem('甲', 'Projects') + statItem('乙', 'Posts') +
-            statItem('丙', 'Years') + statItem('丁', 'Commits') +
+    /* 侧栏：投递状态 + 直接联系入口 */
+    function resumeAside() {
+        return '<aside class="resume-aside">' +
+            '<div class="card resume-card">' +
+            '<span class="eyebrow">' + escapeHTML(t('resumeEyebrow')) + '</span>' +
+            '<p class="resume-card-line">' + escapeHTML(t('resumeStatus')) + '</p>' +
             '</div>' +
-            '<section class="section">' +
-            sectionHeading('featuredProjects', '#project', 'allProjects') +
-            '<div class="project-grid">' + PROJECTS.slice(0, 2).map(projectCard).join('') + '</div>' +
-            '</section>' +
-            '<section class="section">' +
-            sectionHeading('latestPosts', '#story', 'allPosts') +
-            '<div class="post-list">' + POSTS.slice(0, 3).map(postItem).join('') + '</div>' +
-            '</section>' +
-            '</div>';
+            '<ul class="contact-list">' +
+            '<li><a href="tel:18572535303">' +
+            '<span class="icon" aria-hidden="true">☎</span>' +
+            '<span><span class="label">' + escapeHTML(t('phone')) + '</span>18572535303</span></a></li>' +
+            '<li><a href="mailto:2837981969@qq.com">' +
+            '<span class="icon" aria-hidden="true">✉</span>' +
+            '<span><span class="label">' + escapeHTML(t('email')) + '</span>2837981969@qq.com</span></a></li>' +
+            '</ul></aside>';
+    }
+
+    /* 首页即个人简历：正文取自 content/home.md，按简历逻辑分区 */
+    function viewHome(doc) {
+        return '<div class="page"><div class="resume-grid">' +
+            '<div class="prose resume-copy">' + renderMarkdown(stripH1(doc.body)) + '</div>' +
+            resumeAside() +
+            '</div></div>';
     }
 
     function viewProject(doc) {
         return '<div class="page">' +
-            '<div class="prose" style="max-width:var(--container-narrow);margin-bottom:var(--sp-7)">' +
+            '<div class="prose" style="max-width:var(--container-narrow)">' +
             renderMarkdown(doc.body) + '</div>' +
-            '<div class="project-grid">' + PROJECTS.map(projectCard).join('') + '</div>' +
             '</div>';
     }
 
     function viewStory(doc) {
-        var list = POSTS.length
-            ? '<div class="post-list">' + POSTS.map(postItem).join('') + '</div>'
-            : '<p class="muted">' + escapeHTML(t('noPosts')) + '</p>';
         return '<div class="page">' +
-            '<div class="prose" style="max-width:var(--container-narrow);margin-bottom:var(--sp-6)">' +
-            renderMarkdown(doc.body) + '</div>' + list + '</div>';
+            '<div class="prose" style="max-width:var(--container-narrow)">' +
+            renderMarkdown(doc.body) + '</div></div>';
     }
 
-    function viewAbout(doc) {
-        return '<div class="page"><div class="about-grid">' +
-            '<div class="prose">' + renderMarkdown(doc.body) + '</div>' +
-            '<aside class="about-side">' +
-            '<div class="card profile-card">' +
-            '<img src="images/avatar.svg" alt="avatar" />' +
-            '<div class="name">吕广成</div>' +
-            '<div class="role">Developer / 开发者</div>' +
-            '<div class="social-row">' +
-            '<a href="#" aria-label="GitHub">GH</a>' +
-            '<a href="#" aria-label="Email">@</a>' +
-            '<a href="#" aria-label="RSS">RSS</a>' +
-            '</div></div>' +
-            '<div class="card"><h4 style="margin-top:0">' + escapeHTML(t('toc')) + '</h4>' +
-            '<p class="small muted" style="margin:0">甲 · 乙 · 丙 · 丁</p></div>' +
-            '</aside></div></div>';
-    }
+    /* 文章页：标题 / 日期 / 标签取自 Markdown 的 front matter，
+       上一篇 / 下一篇按 PAGES 里 post 的登记顺序推导 */
+    var POST_IDS = Object.keys(PAGES).filter(function (id) { return PAGES[id].view === 'post'; });
 
     function viewPost(doc, pageId) {
-        var index = -1;
-        POSTS.forEach(function (p, i) { if (p.id === pageId) index = i; });
-        var post = index >= 0 ? POSTS[index] : null;
-        var prev = index > 0 ? POSTS[index - 1] : null;
-        var next = (index >= 0 && index < POSTS.length - 1) ? POSTS[index + 1] : null;
+        var index = POST_IDS.indexOf(pageId);
+        var prev = index > 0 ? POST_IDS[index - 1] : null;
+        var next = (index >= 0 && index < POST_IDS.length - 1) ? POST_IDS[index + 1] : null;
         var meta = doc.meta || {};
-        var tags = meta.tags || (post && post.tags) || [];
+        var tags = meta.tags || [];
         if (!Array.isArray(tags)) tags = [tags];
-        var date = meta.date || (post && post.date) || '';
+        var date = meta.date || '';
 
         var header = '<header class="post-header">' +
             '<a class="back-link" href="#story">← ' + escapeHTML(t('navStory')) + '</a>' +
@@ -398,8 +297,8 @@
             '</div></header>';
 
         var nav = '<nav class="post-nav">' +
-            (prev ? '<a href="#' + prev.id + '">← ' + escapeHTML(t('prevPost')) + '</a>' : '<span></span>') +
-            (next ? '<a href="#' + next.id + '">' + escapeHTML(t('nextPost')) + ' →</a>' : '<span></span>') +
+            (prev ? '<a href="#' + prev + '">← ' + escapeHTML(t('prevPost')) + '</a>' : '<span></span>') +
+            (next ? '<a href="#' + next + '">' + escapeHTML(t('nextPost')) + ' →</a>' : '<span></span>') +
             '</nav>';
 
         return '<div class="page"><article class="prose">' +
@@ -425,7 +324,6 @@
                 case 'home':    html = viewHome(doc); break;
                 case 'project': html = viewProject(doc); break;
                 case 'story':   html = viewStory(doc); break;
-                case 'about':   html = viewAbout(doc); break;
                 case 'post':    html = viewPost(doc, pageId); break;
                 default:        html = '<div class="page"><div class="prose">' + renderMarkdown(doc.body) + '</div></div>';
             }
@@ -455,9 +353,7 @@
 
     function closeMenu() {
         var links = $('#nav-links');
-        var btn = $('#menu-toggle');
         if (links) links.classList.remove('open');
-        if (btn) btn.setAttribute('aria-expanded', 'false');
     }
 
     function handleRoute() {
@@ -641,13 +537,6 @@
         }
         syncI18nNodes(document);
 
-        var menuBtn = $('#menu-toggle');
-        if (menuBtn) {
-            menuBtn.addEventListener('click', function () {
-                var open = $('#nav-links').classList.toggle('open');
-                menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
-            });
-        }
         document.addEventListener('click', function (e) {
             if (!e.target.closest('.navbar')) closeMenu();
         });

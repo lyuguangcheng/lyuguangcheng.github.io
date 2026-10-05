@@ -24,8 +24,7 @@
     var I18N = {
         zh: {
             navHome: '首页', navStory: '随笔',
-            footer: '© 2026 吕广成 · 用原生 HTML / CSS / JS 手写。',
-            visitors: '访问量', loading: '加载中…',
+            loading: '加载中…',
             notFound: '找不到这个页面', notFoundDesc: '链接可能已经失效，回到首页看看吧。',
             loadError: '内容加载失败',
             loadErrorDesc: '请确认 content/ 目录下存在对应文件，或通过本地服务器预览。',
@@ -36,8 +35,7 @@
         },
         en: {
             navHome: 'Home', navStory: 'Story',
-            footer: '© 2026 Lvguangcheng · Hand-coded with vanilla HTML / CSS / JS.',
-            visitors: 'Visitors', loading: 'Loading…',
+            loading: 'Loading…',
             notFound: 'Page not found', notFoundDesc: 'This link may be broken. Let’s head back home.',
             loadError: 'Failed to load content',
             loadErrorDesc: 'Check that the file exists under content/, or preview through a local server.',
@@ -480,21 +478,6 @@
         box.classList.add('open');
     }
 
-    /* ----------------------------- 访客计数 -------------------------------- */
-    /* 使用公开计数服务；不可用时静默降级为占位符，不影响页面其它功能 */
-    function visitorCount() {
-        var el = $('#visitor-count');
-        if (!el) return;
-        var url = 'https://api.counterapi.dev/v1/lvguangcheng.github.io/home/up';
-        fetch(url)
-            .then(function (r) { return r.ok ? r.json() : Promise.reject(new Error('HTTP ' + r.status)); })
-            .then(function (data) {
-                var n = data && (data.count != null ? data.count : data.value);
-                el.textContent = n != null ? Number(n).toLocaleString(lang === 'zh' ? 'zh-CN' : 'en-US') : '—';
-            })
-            .catch(function () { el.textContent = '—'; });
-    }
-
     /* ------------------------------- 初始化 -------------------------------- */
     function init() {
         applyTheme(document.documentElement.getAttribute('data-theme') || 'light');
@@ -523,7 +506,6 @@
         mo.observe(contentArea, { childList: true });
 
         scrollBehaviors();
-        visitorCount();
 
         window.addEventListener('hashchange', handleRoute);
         handleRoute();

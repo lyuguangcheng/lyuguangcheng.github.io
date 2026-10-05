@@ -33,7 +33,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;700&family=Space+Grotesk:wght@300;600&family=Noto+Sans+SC:wght@300;500;700&display=swap"
         rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css?v=6" />
+    <link rel="stylesheet" href="styles.css?v=7" />
 
     <!-- Markdown 渲染器（离线时自动降级为纯文本，见 app.js） -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -81,10 +81,12 @@
 
     <footer class="site-footer">
         <div class="footer-content">
-            <p data-i18n="footer">© 2026 吕广成 · 用原生 HTML / CSS / JS 手写。</p>
+            <!-- 访问量：hits.sh 的 SVG 徽章，每加载一次页面 +1，无需注册与密钥。
+                 若这里加载不出来（境外服务偶发不可达），可整行换成国内服务：
+                 https://visitor-badge.laobi.icu/badge?page_id=lyuguangcheng.github.io&left_text=%E8%AE%BF%E9%97%AE%E9%87%8F -->
             <p class="visitor-stat">
-                <span data-i18n="visitors">访问量</span>
-                <span id="visitor-count" aria-live="polite">—</span>
+                <img src="https://hits.sh/lyuguangcheng.github.io.svg?label=%E8%AE%BF%E9%97%AE%E9%87%8F&color=4f46e5&labelColor=6b7280"
+                    alt="访问量" width="76" height="20" loading="lazy" referrerpolicy="no-referrer" />
             </p>
         </div>
     </footer>
@@ -93,7 +95,7 @@
 
     <!-- 内嵌的 Markdown 内容（由 build-content.ps1 生成），让 file:// 直接打开也能显示 -->
     <script src="content-bundle.js?v=4"></script>
-    <script src="app.js?v=6"></script>
+    <script src="app.js?v=7"></script>
 </body>
 
 </html>

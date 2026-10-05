@@ -729,17 +729,20 @@ a.tag:hover { color: var(--accent); border-color: var(--accent); }
 .footer-content {
     max-width: var(--container);
     margin: 0 auto;
-    padding: var(--sp-6) var(--sp-5);
+    padding: var(--sp-5) var(--sp-5);
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     gap: var(--sp-3);
     font-size: var(--fs-sm);
     color: var(--text-muted);
 }
 .footer-content p { margin: 0; }
-.visitor-stat { display: inline-flex; align-items: center; gap: var(--sp-2); font-family: var(--font-mono); font-size: var(--fs-xs); }
+
+/* 访问量：hits.sh 返回的 SVG 徽章，保证高 DPI 下不模糊 */
+.visitor-stat { display: inline-flex; align-items: center; }
+.visitor-stat img { display: block; height: 20px; width: auto; }
 
 .back-to-top {
     position: fixed;
@@ -809,6 +812,6 @@ a.tag:hover { color: var(--accent); border-color: var(--accent); }
     .prose h1 { font-size: var(--fs-2xl); }
     .prose h2 { font-size: var(--fs-xl); }
 
-    .footer-content { flex-direction: column; align-items: flex-start; }
+    .footer-content { align-items: center; justify-content: center; }
     .back-to-top { right: var(--sp-4); bottom: var(--sp-4); }
 }

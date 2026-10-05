@@ -46,6 +46,7 @@
     /* 布局 */
     --container: 1080px;
     --container-narrow: 760px;
+    --resume-width: 900px;
     --nav-w: 720px;
     --nav-h: 68px;
 
@@ -376,17 +377,6 @@ code, pre, kbd { font-family: var(--font-mono); font-size: 0.9em; }
 .section { margin-bottom: var(--sp-9); }
 .section:last-child { margin-bottom: 0; }
 
-.eyebrow {
-    display: inline-block;
-    margin-bottom: var(--sp-3);
-    font-family: var(--font-mono);
-    font-size: var(--fs-xs);
-    font-weight: 500;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--accent);
-}
-
 .lead { font-size: var(--fs-lg); line-height: 1.7; color: var(--text-soft); }
 .muted { color: var(--text-muted); }
 .small { font-size: var(--fs-sm); }
@@ -404,7 +394,6 @@ code, pre, kbd { font-family: var(--font-mono); font-size: 0.9em; }
         border-color var(--t-base) var(--ease);
 }
 .card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: var(--border-strong); }
-
 
 .tag-row { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
 
@@ -466,29 +455,38 @@ a.tag:hover { color: var(--accent); border-color: var(--accent); }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* ------------------------- 6. 首页 = 个人简历 ---------------------------- */
-/* 两栏：左侧简历正文（Markdown 渲染），右侧投递状态与联系方式 */
-.resume-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 264px;
-    gap: var(--sp-7);
-    align-items: start;
+/* 单列居中：简历正文整体收在一个居中的阅读宽度里，四周留白，分区靠标题拉开层次 */
+.resume-copy {
+    max-width: var(--resume-width);
+    margin: 0 auto;
 }
 
-.resume-copy { max-width: none; }
-
-/* 简历证件照：跟随正文排版的小头像，点开可放大 */
+/* 证件照：右上角浮动，正文自然环绕 */
 .resume-copy img {
     float: right;
     width: 116px;
     aspect-ratio: 3 / 4;
-    margin: 0 0 var(--sp-4) var(--sp-5);
+    margin: var(--sp-1) 0 var(--sp-4) var(--sp-5);
     object-fit: cover;
     border-radius: var(--r-md);
     border: 1px solid var(--border);
     box-shadow: var(--shadow-md);
 }
 
-/* 简历里的时间线表格：桌面端首列不换行，窄屏放开避免横向溢出 */
+/* 姓名：整体居中的简历页，标题也居中 */
+.resume-copy > h1:first-child {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: var(--sp-6);
+}
+
+/* 分区标题：加一条分隔线，让简历的分块关系一眼可见 */
+.resume-copy h2 {
+    margin-top: var(--sp-8);
+    padding-bottom: var(--sp-3);
+}
+
+/* 时间线表格：桌面端首列不换行，窄屏放开避免横向溢出 */
 @media (min-width: 761px) {
     .resume-copy th:first-child,
     .resume-copy td:first-child { white-space: nowrap; }
@@ -497,16 +495,8 @@ a.tag:hover { color: var(--accent); border-color: var(--accent); }
 .resume-copy th,
 .resume-copy td { word-break: break-word; }
 
-.resume-aside {
-    position: sticky;
-    top: calc(var(--nav-h) + var(--sp-5));
-    display: grid;
-    gap: var(--sp-4);
-}
-
-.resume-card { text-align: center; padding: var(--sp-4); }
-.resume-card .eyebrow { margin-bottom: var(--sp-2); }
-.resume-card-line { margin: 0; font-size: var(--fs-sm); font-weight: 600; color: var(--text); }
+.resume-copy ul { padding-left: 1.2rem; }
+.resume-copy > *:last-child { margin-bottom: 0; }
 
 .post-header { margin-bottom: var(--sp-6); padding-bottom: var(--sp-5); border-bottom: 1px solid var(--border); }
 .post-header h1 { font-size: var(--fs-3xl); margin-bottom: var(--sp-3); }
@@ -691,15 +681,7 @@ a.tag:hover { color: var(--accent); border-color: var(--accent); }
 }
 .lightbox.open img { transform: scale(1); }
 
-/* ---------------------------- 10. 关于 / 联系 --------------------------- */
-.about-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 300px;
-    gap: var(--sp-7);
-    align-items: start;
-}
-.about-side { position: sticky; top: calc(var(--nav-h) + var(--sp-5)); display: grid; gap: var(--sp-4); }
-
+/* ------------------------- 10. 关于（当前未挂入口，样式保留备用） --------- */
 .timeline { position: relative; margin: 0; padding: 0 0 0 var(--sp-5); list-style: none; }
 .timeline::before {
     content: '';
@@ -733,51 +715,6 @@ a.tag:hover { color: var(--accent); border-color: var(--accent); }
 
 .skill-group { margin-bottom: var(--sp-5); }
 .skill-group h4 { margin-bottom: var(--sp-3); font-size: var(--fs-sm); letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); }
-
-.contact-list { display: grid; gap: var(--sp-3); padding: 0; margin: 0; list-style: none; }
-.contact-list li { margin: 0; }
-.contact-list a {
-    display: flex;
-    align-items: center;
-    gap: var(--sp-3);
-    padding: var(--sp-3) var(--sp-4);
-    color: var(--text);
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--r-md);
-    transition: transform var(--t-base) var(--ease-out), border-color var(--t-base) var(--ease);
-}
-.contact-list a:hover { transform: translateX(4px); border-color: var(--border-strong); color: var(--text); }
-.contact-list .icon { font-size: var(--fs-lg); }
-.contact-list .label { font-size: var(--fs-xs); color: var(--text-faint); display: block; }
-
-.profile-card { text-align: center; }
-.profile-card img {
-    width: 116px;
-    height: 116px;
-    margin: 0 auto var(--sp-4);
-    object-fit: cover;
-    border-radius: 50%;
-    border: 2px solid var(--border);
-}
-.profile-card .name { font-family: var(--font-display); font-size: var(--fs-lg); font-weight: 600; }
-.profile-card .role { font-size: var(--fs-sm); color: var(--text-muted); }
-
-.social-row { display: flex; justify-content: center; gap: var(--sp-2); margin-top: var(--sp-4); }
-.social-row a {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    color: var(--text-soft);
-    background: var(--bg-subtle);
-    border: 1px solid var(--border);
-    border-radius: var(--r-full);
-    font-size: var(--fs-sm);
-    transition: transform var(--t-fast) var(--ease), color var(--t-fast) var(--ease);
-}
-.social-row a:hover { transform: translateY(-2px); color: var(--accent); }
 
 /* --------------------------- 11. 页脚与浮动控件 ------------------------- */
 .site-footer {
@@ -850,10 +787,7 @@ a.tag:hover { color: var(--accent); border-color: var(--accent); }
 }
 
 /* ------------------------------- 13. 响应式 ----------------------------- */
-@media (max-width: 960px) {
-    .resume-grid { grid-template-columns: 1fr; }
-    .resume-aside { position: static; }
-}
+/* 首页简历为单列居中，窄屏只需收紧留白，无需折叠栏位 */
 
 @media (max-width: 760px) {
     :root { --nav-h: 56px; }

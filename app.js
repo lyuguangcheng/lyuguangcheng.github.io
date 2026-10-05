@@ -24,8 +24,6 @@
     var I18N = {
         zh: {
             navHome: '首页', navStory: '随笔',
-            resumeEyebrow: 'Resume', resumeStatus: '求职方向：软件测试 / 后端开发',
-            phone: '手机', email: '邮箱',
             footer: '© 2026 吕广成 · 用原生 HTML / CSS / JS 手写。',
             visitors: '访问量', loading: '加载中…',
             notFound: '找不到这个页面', notFoundDesc: '链接可能已经失效，回到首页看看吧。',
@@ -38,8 +36,6 @@
         },
         en: {
             navHome: 'Home', navStory: 'Story',
-            resumeEyebrow: 'Resume', resumeStatus: 'Open to: software testing / backend roles',
-            phone: 'Phone', email: 'Email',
             footer: '© 2026 Lvguangcheng · Hand-coded with vanilla HTML / CSS / JS.',
             visitors: 'Visitors', loading: 'Loading…',
             notFound: 'Page not found', notFoundDesc: 'This link may be broken. Let’s head back home.',
@@ -234,28 +230,10 @@
             '</div></div>';
     }
 
-    /* 侧栏：投递状态 + 直接联系入口 */
-    function resumeAside() {
-        return '<aside class="resume-aside">' +
-            '<div class="card resume-card">' +
-            '<span class="eyebrow">' + escapeHTML(t('resumeEyebrow')) + '</span>' +
-            '<p class="resume-card-line">' + escapeHTML(t('resumeStatus')) + '</p>' +
-            '</div>' +
-            '<ul class="contact-list">' +
-            '<li><a href="tel:18572535303">' +
-            '<span class="icon" aria-hidden="true">☎</span>' +
-            '<span><span class="label">' + escapeHTML(t('phone')) + '</span>18572535303</span></a></li>' +
-            '<li><a href="mailto:2837981969@qq.com">' +
-            '<span class="icon" aria-hidden="true">✉</span>' +
-            '<span><span class="label">' + escapeHTML(t('email')) + '</span>2837981969@qq.com</span></a></li>' +
-            '</ul></aside>';
-    }
-
-    /* 首页即个人简历：正文取自 content/home.md，按简历逻辑分区 */
+    /* 首页即个人简历：正文取自 content/home.md，按简历逻辑分区，单列居中排版 */
     function viewHome(doc) {
-        return '<div class="page"><div class="resume-grid">' +
-            '<div class="prose resume-copy">' + renderMarkdown(stripH1(doc.body)) + '</div>' +
-            resumeAside() +
+        return '<div class="page"><div class="prose resume-copy">' +
+            renderMarkdown(stripH1(doc.body)) +
             '</div></div>';
     }
 

@@ -16,6 +16,7 @@
 | `content/*.md` | 站点内容（首页简历、项目、随笔等） |
 | `content-bundle.js` | **自动生成**，把 `content/*.md` 内嵌成 JS |
 | `build-content.ps1` | 生成 `content-bundle.js` 的脚本 |
+| `tools/check-home.js` | 首页自检脚本（见下） |
 | `images/` | 头像、封面、图标 |
 
 ## 改内容后必须重建 bundle
@@ -107,3 +108,15 @@ https://visitor-badge.laobi.icu/badge?page_id=lyuguangcheng.github.io&left_text=
 
 - 直接双击 `index.html`（依赖 `content-bundle.js` 的内嵌内容）；
 - 或起一个静态服务器，例如 `python -m http.server 8000`，再访问 `http://127.0.0.1:8000/`。
+
+## 首页自检
+
+改完简历内容（尤其调整分区顺序、搬动条目）后，可以跑一次自检：
+
+```powershell
+node tools/check-home.js
+```
+
+它用最小 DOM 打桩在 Node 里跑一遍 `app.js` 的渲染链路，分别渲染**中文和英文**首页，
+断言分区标题、条目归属、顺序等是否符合预期，全部通过会打印 `ALL CHECKS PASSED`。
+不依赖浏览器，也不需要联网。

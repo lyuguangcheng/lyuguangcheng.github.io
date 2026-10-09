@@ -4,7 +4,7 @@ title: Home
 
 <!-- English version of the résumé on the home page.
      Keep the section order in sync with content/home.md:
-     Basics → Education → Experience → Projects → Summary → Contact -->
+     Basics → Education & Service → Experience → Projects → Summary → Contact -->
 
 # 吕广成 (Lv Guangcheng)
 
@@ -19,19 +19,21 @@ title: Home
 - **Phone** — +86 185 7253 5303
 - **Email** — 2837981969@qq.com
 
-## Education
+## Education & Service
 
-| Period | School | Major / Degree |
+| Period | School / Unit | Major / Role |
 | --- | --- | --- |
 | Sep 2020 — Jun 2024 | Guangxi Minzu University | Software Engineering / Bachelor |
+| Sep 2024 — Sep 2026 | Armed Police Force | Conscript |
 
 **Core coursework** — C/C++, JavaEE, Data Structures, Database Systems, Algorithm Design and Analysis, Computer Organization, Software Requirements Engineering, Software Design Patterns, Computer Networks, Software Design and Construction, Software Testing, Mobile Application Development
+
+**Service record** — Two years of compulsory service. Firm political stance, strict discipline, strong sense of the bigger picture and responsibility, good at teamwork and communication, steady under pressure, hard-working, with solid execution and stress tolerance.
 
 ## Experience
 
 | Period | Role | Details |
 | --- | --- | --- |
-| Sep 2024 — Sep 2026 | Armed Police Force · Conscript | Two years of compulsory service. Firm political stance, strict discipline, strong sense of the bigger picture and responsibility, good at teamwork and communication, steady under pressure, hard-working, with solid execution and stress tolerance. |
 | Oct 2023 — Nov 2023 | 3rd Guangxi University Software Testing Skills Competition | Ran functional, automated and performance testing on the system under test. Served as team lead, assigning tasks and taking charge of performance testing: used PerformanceRunner for load testing and consolidated the issues raised by the other test tasks. The competition sharpened my problem-solving approach and strategy, and we won **third prize in the Guangxi region**. |
 | Apr 2023 — Jun 2023 | Smart Campus system development | Built and designed the Smart Campus system based on the requirements of the 12th China Software Cup (see Projects below). |
 | Oct 2022 — Nov 2022 | Cooking Guidance system development | Worked in the Kingdee Cloud Cangqiong lightweight environment, reading and applying the technical documentation to develop the Cooking Guidance system (see Projects below). |
